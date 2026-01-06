@@ -19,7 +19,6 @@ python main.py
 * Do cần tải dữ liệu bản đồ nên việc hoàn thành khởi động backend có thể mất tới 5-7 phút trước khi đi vào hoạt động.
 2) Frontend
 ```bash
-# Vào thư mục frontendpy
 cd frontend
 npm install
 npm run dev
