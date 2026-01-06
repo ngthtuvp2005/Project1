@@ -3,10 +3,11 @@ backend/Project1/lib/
 backend/Project1/include/
 backend/Project1/bin/
 backend/Project1/share/
-
+backend/cache/
 venv/
 env/
 .venv/
 
 __pycache__/
 *.pyc
+backend/hanoi_final_v2.graphml

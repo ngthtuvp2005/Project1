@@ -19,8 +19,12 @@ def solve_astar(G, start_node, end_node):
         if current_node == end_node:
             break
         for neighbor in G.neighbors(current_node):
-            edge_data = G.get_edge_data(current_node, neighbor)[0]
-            weight = edge_data.get('length', 0)
+            edge_dict = G.get_edge_data(current_node, neighbor)
+            edge_data = min(
+                edge_dict.values(),
+                key=lambda d: d.get("weight", d.get("length", 1))
+            )
+            weight = edge_data.get("weight", edge_data.get("length", 1))
             tentative_g = g_score[current_node] + weight
             if tentative_g < g_score[neighbor]:
                 parent[neighbor] = current_node

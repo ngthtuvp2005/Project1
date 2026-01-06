@@ -43,6 +43,30 @@ def load_map():
         print("Tải bản đồ thành công.")
     
     print(f"Server Sẵn sàng! Tổng số {len(G.nodes)} nút.")
+    
+    for u, v, k, data in G.edges(keys=True, data=True):
+        length = data.get("length", 1)
+
+        highway = data.get("highway", "")
+        if isinstance(highway, list):
+            highway = highway[0]
+
+        penalty = 1.0
+
+        if highway in ["residential", "service"]:
+            penalty = 1.5
+        elif highway in ["motorway", "trunk"]:
+            penalty = 0.8
+
+        if data.get("bridge"):
+            penalty *= 1.2
+
+        if data.get("tunnel"):
+            penalty *= 1.1
+
+        data["penalty"] = penalty
+        data["weight"] = length * penalty
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):

@@ -12,8 +12,9 @@ def solve_dijkstra(G, start_node, end_node):
         if current_dist > min_dist[current_node]:
             continue
         for neighbor in G.neighbors(current_node):
-            edge_data = G.get_edge_data(current_node, neighbor)[0]
-            weight = edge_data.get('length', 0) 
+            edge_data_dict = G.get_edge_data(current_node, neighbor)
+            edge_data = next(iter(edge_data_dict.values()))
+            weight = edge_data.get('weight', edge_data.get('length', 1))
             new_dist = current_dist + weight
             if new_dist < min_dist[neighbor]:
                 min_dist[neighbor] = new_dist
