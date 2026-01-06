@@ -1,0 +1,12 @@
+
+backend/Project1/lib/
+backend/Project1/include/
+backend/Project1/bin/
+backend/Project1/share/
+
+venv/
+env/
+.venv/
+
+__pycache__/
+*.pyc
