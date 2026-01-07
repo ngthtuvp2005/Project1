@@ -8,7 +8,7 @@ def euclidean_distance(G, node1_id, node2_id):
     y2 = G.nodes[node2_id]['y']
     return math.sqrt((x1 - x2)**2 + (y1 - y2)**2)
 
-def solve_astar(G, start_node, end_node):
+def solve_astar(G, start_node, end_node, avg_speed_kmh = 40):
     priority_queue = [(0, start_node)]
     g_score = {node: float('inf') for node in G.nodes}
     g_score[start_node] = 0
@@ -33,10 +33,28 @@ def solve_astar(G, start_node, end_node):
                 f_score = tentative_g + h_score
                 heapq.heappush(priority_queue, (f_score, neighbor))
     if g_score[end_node] == float('inf'):
-        return []
+        return [], 0
     path = []
     curr = end_node
     while curr is not None:
         path.append(curr)
         curr = parent.get(curr) 
-    return path[::-1]
+    path = path[::-1]
+
+    total_seconds = 0
+    if len(path) > 1:
+        speed_ms = avg_speed_kmh / 3.6 # Đổi km/h -> m/s
+        
+        for u, v in zip(path[:-1], path[1:]):
+            # Lấy lại thông tin cạnh để tính giờ
+            if G.has_edge(u, v):
+                # OSMnx là MultiDiGraph, lấy cạnh đầu tiên (key=0)
+                edge_data = G[u][v][0] 
+                
+                length = edge_data.get('length', 0)
+                penalty = edge_data.get('penalty', 1.0)
+                
+                # Công thức: t = (d * p) / v
+                total_seconds += (length * penalty) / speed_ms
+
+    return path, total_seconds

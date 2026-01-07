@@ -69,12 +69,12 @@ function App() {
              !end ? "Chọn điểm ĐẾN" : "Đã tìm thấy đường!"}
           </div>
         </div>
-
+round
         {res && res.status === 'found' && (
-          <div className="result-card">
+          <div className="result-card">phút
              <label className="label">Kết quả</label>
              <div className="result-item"><span>Quãng đường:</span> <span className="result-value">{(res.distance/1000).toFixed(2)} km</span></div>
-             <div className="result-item"><span>Thời gian:</span> <span className="result-value">{res.time} s</span></div>
+             <div className="result-item"><span>Thời gian:</span> <span className="result-value">{Math.round(res.time / 60)} phút</span></div>
              <div className="result-item"><span>Số nút:</span> <span className="result-value">{res.node_count}</span></div>
              
              <div className="legend">

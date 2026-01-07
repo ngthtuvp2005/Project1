@@ -97,8 +97,7 @@ def find_path(req: PathRequest):
         if not solve_func: raise HTTPException(400, "Thuật toán không hỗ trợ")
 
         t_start = time.time()
-        path_nodes = solve_func(G, orig, dest)
-        exec_time = time.time() - t_start
+        path_nodes, exec_time = solve_func(G, orig, dest, avg_speed_kmh = 40)
 
         if not path_nodes: return {"status": "not_found"}
 
